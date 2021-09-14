@@ -1,0 +1,892 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Project1 - Diabetes dataset analysis},
+  pdfauthor={Shuyi Li},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Project1 - Diabetes dataset analysis}
+\author{Shuyi Li}
+\date{14 September, 2021}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{dependencies}{%
+\subsection{Dependencies}\label{dependencies}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(ggfortify)}
+\FunctionTok{library}\NormalTok{(Hmisc)}
+\FunctionTok{library}\NormalTok{(factoextra)}
+\FunctionTok{library}\NormalTok{(pca3d)}
+\FunctionTok{library}\NormalTok{(rgl)}
+\FunctionTok{library}\NormalTok{(Rtsne)}
+\FunctionTok{library}\NormalTok{(ggcorrplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-info}{%
+\subsection{Data info}\label{data-info}}
+
+{[}Data Sources{]}
+(\url{https://search.r-project.org/CRAN/refmans/mlbench/html/PimaIndiansDiabetes.html})
+
+\hypertarget{check-the-data-structure}{%
+\subsubsection{Check the data
+structure}\label{check-the-data-structure}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import raw data}
+\NormalTok{diabetes }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{\textquotesingle{}diabetes.csv\textquotesingle{}}\NormalTok{,}\AttributeTok{header =}\NormalTok{ T)}
+\CommentTok{\# replace 0 with NA}
+\NormalTok{var\_with\_NAs }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Glucose"}\NormalTok{,}\StringTok{"BloodPressure"}\NormalTok{,}\StringTok{"SkinThickness"}\NormalTok{,}\StringTok{"Insulin"}\NormalTok{,}\StringTok{"BMI"}\NormalTok{,}\StringTok{"Age"}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ var\_with\_NAs)\{}
+\NormalTok{  diabetes[[i]][diabetes[[i]] }\SpecialCharTok{==} \DecValTok{0}\NormalTok{] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\NormalTok{\}}
+\NormalTok{diabetes}\SpecialCharTok{$}\NormalTok{Outcome[diabetes}\SpecialCharTok{$}\NormalTok{Outcome }\SpecialCharTok{==} \DecValTok{0}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}healthy\textquotesingle{}}
+\NormalTok{diabetes}\SpecialCharTok{$}\NormalTok{Outcome[diabetes}\SpecialCharTok{$}\NormalTok{Outcome }\SpecialCharTok{==} \DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}diabetes\textquotesingle{}}
+\CommentTok{\# turn the outcome variable into factor}
+\NormalTok{diabetes}\SpecialCharTok{$}\NormalTok{Outcome }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(diabetes}\SpecialCharTok{$}\NormalTok{Outcome)}
+\CommentTok{\# check the data structure}
+\FunctionTok{str}\NormalTok{(diabetes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    768 obs. of  9 variables:
+##  $ Pregnancies             : int  6 1 8 1 0 5 3 10 2 8 ...
+##  $ Glucose                 : int  148 85 183 89 137 116 78 115 197 125 ...
+##  $ BloodPressure           : int  72 66 64 66 40 74 50 NA 70 96 ...
+##  $ SkinThickness           : int  35 29 NA 23 35 NA 32 NA 45 NA ...
+##  $ Insulin                 : int  NA NA NA 94 168 NA 88 NA 543 NA ...
+##  $ BMI                     : num  33.6 26.6 23.3 28.1 43.1 25.6 31 35.3 30.5 NA ...
+##  $ DiabetesPedigreeFunction: num  0.627 0.351 0.672 0.167 2.288 ...
+##  $ Age                     : int  50 31 32 21 33 30 26 29 53 54 ...
+##  $ Outcome                 : Factor w/ 2 levels "diabetes","healthy": 1 2 1 2 1 2 1 2 1 1 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Remove NA rows}
+\NormalTok{diabetes }\OtherTok{\textless{}{-}}\NormalTok{diabetes }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{na.omit}\NormalTok{()}
+\FunctionTok{dim}\NormalTok{(diabetes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 392   9
+\end{verbatim}
+
+After remove the NA values, the samples number reduced from 768 to 392
+
+\hypertarget{data-preview}{%
+\subsubsection{Data preview}\label{data-preview}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{head}\NormalTok{(diabetes))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.03}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.12}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.08}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.14}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.14}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.08}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.05}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.25}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.04}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.09}}@{}}
+\toprule
+& Pregnancies & Glucose & BloodPressure & SkinThickness & Insulin & BMI
+& DiabetesPedigreeFunction & Age & Outcome \\
+\midrule
+\endhead
+4 & 1 & 89 & 66 & 23 & 94 & 28.1 & 0.167 & 21 & healthy \\
+5 & 0 & 137 & 40 & 35 & 168 & 43.1 & 2.288 & 33 & diabetes \\
+7 & 3 & 78 & 50 & 32 & 88 & 31.0 & 0.248 & 26 & diabetes \\
+9 & 2 & 197 & 70 & 45 & 543 & 30.5 & 0.158 & 53 & diabetes \\
+14 & 1 & 189 & 60 & 23 & 846 & 30.1 & 0.398 & 59 & diabetes \\
+15 & 5 & 166 & 72 & 19 & 175 & 25.8 & 0.587 & 51 & diabetes \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diabetes\_lm }\OtherTok{\textless{}{-}}\NormalTok{ diabetes[, }\SpecialCharTok{{-}}\DecValTok{9}\NormalTok{]}
+\DocumentationTok{\#\# subset based on diabetes or healthy samples}
+\NormalTok{diabetes\_sub }\OtherTok{\textless{}{-}}\NormalTok{ diabetes\_lm[diabetes}\SpecialCharTok{$}\NormalTok{Outcome }\SpecialCharTok{\%in\%} \StringTok{"diabetes"}\NormalTok{,]}
+\NormalTok{healthy\_sub }\OtherTok{\textless{}{-}}\NormalTok{ diabetes\_lm[diabetes}\SpecialCharTok{$}\NormalTok{Outcome }\SpecialCharTok{\%in\%} \StringTok{"healthy"}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-initial-inspection}{%
+\subsection{Data initial inspection}\label{data-initial-inspection}}
+
+\hypertarget{scatter-plot}{%
+\subsubsection{Scatter plot}\label{scatter-plot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pairs}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Pregnancies }\SpecialCharTok{+}\NormalTok{ Glucose }\SpecialCharTok{+}\NormalTok{ BloodPressure }\SpecialCharTok{+}\NormalTok{ SkinThickness }\SpecialCharTok{+}\NormalTok{ Insulin }\SpecialCharTok{+}\NormalTok{ BMI }\SpecialCharTok{+}\NormalTok{ DiabetesPedigreeFunction }\SpecialCharTok{+}\NormalTok{ Age,}
+      \AttributeTok{col =}\NormalTok{ diabetes}\SpecialCharTok{$}\NormalTok{Outcome, }\AttributeTok{data =}\NormalTok{ diabetes)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\hypertarget{histogram}{%
+\subsubsection{Histogram}\label{histogram}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{colnames}\NormalTok{(diabetes\_lm))\{}
+  \FunctionTok{hist}\NormalTok{(diabetes\_lm[[i]], }\AttributeTok{main =}\NormalTok{ i, }\AttributeTok{xlab =} \ConstantTok{NULL}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{histogram }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x,y)\{}
+\NormalTok{  p1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(x,}\AttributeTok{col=}\FunctionTok{rgb}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\SpecialCharTok{/}\DecValTok{4}\NormalTok{), }\AttributeTok{main =}\NormalTok{ i, }\AttributeTok{xlab =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{range}\NormalTok{(x))}
+\NormalTok{  p2 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(y,}\AttributeTok{col=}\FunctionTok{rgb}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\SpecialCharTok{/}\DecValTok{4}\NormalTok{),}\AttributeTok{ylim =} \FunctionTok{range}\NormalTok{(y), }\AttributeTok{add=}\NormalTok{T)}
+  \FunctionTok{legend}\NormalTok{ (}\StringTok{"topright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"healthy"}\NormalTok{,}\StringTok{"diabetes"}\NormalTok{),}
+          \AttributeTok{fill =} \FunctionTok{c}\NormalTok{(}\FunctionTok{rgb}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\SpecialCharTok{/}\DecValTok{4}\NormalTok{),}\FunctionTok{rgb}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\SpecialCharTok{/}\DecValTok{4}\NormalTok{)), }\AttributeTok{cex =} \FloatTok{0.8}\NormalTok{)}
+\NormalTok{\}}
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{colnames}\NormalTok{(diabetes\_lm))\{}
+  \FunctionTok{histogram}\NormalTok{(healthy\_sub[[i]], diabetes\_sub[[i]])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-5-2.pdf}
+We can see from the histogram that some variables have a high skewness.
+So we do a log2 transform for some variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diabetes\_lm}\SpecialCharTok{$}\NormalTok{Glucose }\OtherTok{\textless{}{-}} \FunctionTok{log2}\NormalTok{(diabetes\_lm}\SpecialCharTok{$}\NormalTok{Glucose)}
+\NormalTok{diabetes\_lm}\SpecialCharTok{$}\NormalTok{Insulin }\OtherTok{\textless{}{-}} \FunctionTok{log2}\NormalTok{(diabetes\_lm}\SpecialCharTok{$}\NormalTok{Insulin)}
+\NormalTok{diabetes\_lm}\SpecialCharTok{$}\NormalTok{BMI }\OtherTok{\textless{}{-}} \FunctionTok{log2}\NormalTok{(diabetes\_lm}\SpecialCharTok{$}\NormalTok{BMI)}
+\NormalTok{diabetes\_lm}\SpecialCharTok{$}\NormalTok{DiabetesPedigreeFunction }\OtherTok{\textless{}{-}} \FunctionTok{log2}\NormalTok{(diabetes\_lm}\SpecialCharTok{$}\NormalTok{DiabetesPedigreeFunction)}
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{colnames}\NormalTok{(diabetes\_lm))\{}
+  \FunctionTok{hist}\NormalTok{(diabetes\_lm[[i]], }\AttributeTok{main =}\NormalTok{ i, }\AttributeTok{xlab =} \ConstantTok{NULL}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{colnames}\NormalTok{(diabetes\_lm))\{}
+  \FunctionTok{histogram}\NormalTok{(healthy\_sub[[i]], diabetes\_sub[[i]])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+\hypertarget{q-q-plot}{%
+\subsubsection{Q-Q plot}\label{q-q-plot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{colnames}\NormalTok{(diabetes\_lm))\{}
+  \FunctionTok{qqnorm}\NormalTok{(diabetes\_lm[[i]], }\AttributeTok{main =}\NormalTok{ i);}\FunctionTok{qqline}\NormalTok{(diabetes\_lm[[i]], }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\hypertarget{box-plot}{%
+\subsubsection{Box plot}\label{box-plot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{colnames}\NormalTok{(diabetes\_lm))\{}
+  \FunctionTok{boxplot}\NormalTok{(diabetes\_lm[[i]] }\SpecialCharTok{\textasciitilde{}}\NormalTok{ diabetes[[}\StringTok{"Outcome"}\NormalTok{]], }\AttributeTok{data =}\NormalTok{ diabetes, }\AttributeTok{main =}\NormalTok{ i, }\AttributeTok{xlab =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{ylab =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\FunctionTok{rgb}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\SpecialCharTok{/}\DecValTok{4}\NormalTok{), }\FunctionTok{rgb}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\SpecialCharTok{/}\DecValTok{4}\NormalTok{)))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\hypertarget{student-t-test}{%
+\subsubsection{Student t-test}\label{student-t-test}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t\_test }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{ (x,y) \{}
+\NormalTok{  var\_test }\OtherTok{\textless{}{-}} \FunctionTok{var.test}\NormalTok{(x, y, }\AttributeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (var\_test}\SpecialCharTok{$}\NormalTok{p.value }\SpecialCharTok{\textless{}} \FloatTok{0.05} \SpecialCharTok{\&} \FunctionTok{abs}\NormalTok{(var\_test}\SpecialCharTok{$}\NormalTok{estimate) }\SpecialCharTok{\textless{}} \FloatTok{1.1}\NormalTok{) \{}
+     \FunctionTok{t.test}\NormalTok{(x, y, }\AttributeTok{paired =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{var.equal =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{conf.level =} \FloatTok{0.95}\NormalTok{)}
+\NormalTok{  \}}
+  \ControlFlowTok{else}\NormalTok{ \{}
+     \FunctionTok{t.test}\NormalTok{(x, y, }\AttributeTok{paired =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{var.equal =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{conf.level =} \FloatTok{0.95}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t\_test}\NormalTok{(diabetes\_sub}\SpecialCharTok{$}\NormalTok{Glucose, healthy\_sub}\SpecialCharTok{$}\NormalTok{Glucose)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  x and y
+## t = 11.151, df = 218.7, p-value < 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  27.79385 39.72817
+## sample estimates:
+## mean of x mean of y 
+##  145.1923  111.4313
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t\_test}\NormalTok{(diabetes\_sub}\SpecialCharTok{$}\NormalTok{BloodPressure, healthy\_sub}\SpecialCharTok{$}\NormalTok{BloodPressure)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  x and y
+## t = 3.761, df = 237.75, p-value = 0.0002131
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  2.432216 7.782699
+## sample estimates:
+## mean of x mean of y 
+##  74.07692  68.96947
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t\_test}\NormalTok{(diabetes\_sub}\SpecialCharTok{$}\NormalTok{SkinThickness, healthy\_sub}\SpecialCharTok{$}\NormalTok{SkinThickness)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  x and y
+## t = 5.3693, df = 276.33, p-value = 1.677e-07
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  3.616261 7.802999
+## sample estimates:
+## mean of x mean of y 
+##  32.96154  27.25191
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t\_test}\NormalTok{(diabetes\_sub}\SpecialCharTok{$}\NormalTok{Insulin, healthy\_sub}\SpecialCharTok{$}\NormalTok{Insulin)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  x and y
+## t = 5.7337, df = 207.88, p-value = 3.429e-08
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##   49.86272 102.11966
+## sample estimates:
+## mean of x mean of y 
+##  206.8462  130.8550
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t\_test}\NormalTok{(diabetes\_sub}\SpecialCharTok{$}\NormalTok{DiabetesPedigreeFunction, healthy\_sub}\SpecialCharTok{$}\NormalTok{DiabetesPedigreeFunction)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  x and y
+## t = 3.8245, df = 200.74, p-value = 0.0001749
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.07431668 0.23251667
+## sample estimates:
+## mean of x mean of y 
+## 0.6255846 0.4721679
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t\_test}\NormalTok{(diabetes\_sub}\SpecialCharTok{$}\NormalTok{BMI, healthy\_sub}\SpecialCharTok{$}\NormalTok{BMI)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  x and y
+## t = 5.5571, df = 259.51, p-value = 6.797e-08
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  2.599983 5.453875
+## sample estimates:
+## mean of x mean of y 
+##  35.77769  31.75076
+\end{verbatim}
+
+\hypertarget{correlation-analysis}{%
+\subsubsection{Correlation analysis}\label{correlation-analysis}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diabetes\_lm\_1 }\OtherTok{\textless{}{-}}\NormalTok{ diabetes\_lm[, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{8}\NormalTok{)]}
+\NormalTok{cor\_res\_pea }\OtherTok{\textless{}{-}} \FunctionTok{rcorr}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(diabetes\_lm\_1), }\AttributeTok{type =} \StringTok{"pearson"}\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(cor\_res\_pea}\SpecialCharTok{$}\NormalTok{r)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.23}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.09}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.13}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.13}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.09}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.09}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.23}}@{}}
+\toprule
+& Glucose & BloodPressure & SkinThickness & Insulin & BMI &
+DiabetesPedigreeFunction \\
+\midrule
+\endhead
+Glucose & 1.0000000 & 0.2151180 & 0.1999548 & 0.6345966 & 0.2209202 &
+0.1050930 \\
+BloodPressure & 0.2151180 & 1.0000000 & 0.2325712 & 0.1250890 &
+0.2934836 & -0.0273957 \\
+SkinThickness & 0.1999548 & 0.2325712 & 1.0000000 & 0.1982221 &
+0.6721587 & 0.1149568 \\
+Insulin & 0.6345966 & 0.1250890 & 0.1982221 & 1.0000000 & 0.2773418 &
+0.1047894 \\
+BMI & 0.2209202 & 0.2934836 & 0.6721587 & 0.2773418 & 1.0000000 &
+0.1234325 \\
+DiabetesPedigreeFunction & 0.1050930 & -0.0273957 & 0.1149568 &
+0.1047894 & 0.1234325 & 1.0000000 \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggcorrplot}\NormalTok{(cor\_res\_pea}\SpecialCharTok{$}\NormalTok{r)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diabetes\_cor }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{\textquotesingle{}diabetes.csv\textquotesingle{}}\NormalTok{,}\AttributeTok{header =}\NormalTok{ T)}
+\NormalTok{cor\_res\_spe }\OtherTok{\textless{}{-}} \FunctionTok{rcorr}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(diabetes\_cor), }\AttributeTok{type =} \StringTok{"spearman"}\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(cor\_res\_spe}\SpecialCharTok{$}\NormalTok{r)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.18}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.08}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.07}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.10}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.10}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.08}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.07}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.18}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.08}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.07}}@{}}
+\toprule
+& Pregnancies & Glucose & BloodPressure & SkinThickness & Insulin & BMI
+& DiabetesPedigreeFunction & Age & Outcome \\
+\midrule
+\endhead
+Pregnancies & 1.0000000 & 0.1307335 & 0.1851267 & -0.0852223 &
+-0.1267227 & 0.0001321 & -0.0432415 & 0.6072163 & 0.1986887 \\
+Glucose & 0.1307335 & 1.0000000 & 0.2351906 & 0.0600222 & 0.2132058 &
+0.2311412 & 0.0912934 & 0.2850447 & 0.4757763 \\
+BloodPressure & 0.1851267 & 0.2351906 & 1.0000000 & 0.1264859 &
+-0.0067706 & 0.2928704 & 0.0300463 & 0.3508946 & 0.1429207 \\
+SkinThickness & -0.0852223 & 0.0600222 & 0.1264859 & 1.0000000 &
+0.5410001 & 0.4436145 & 0.1803905 & -0.0667949 & 0.0897278 \\
+Insulin & -0.1267227 & 0.2132058 & -0.0067706 & 0.5410001 & 1.0000000 &
+0.1927257 & 0.2211505 & -0.1142129 & 0.0664716 \\
+BMI & 0.0001321 & 0.2311412 & 0.2928704 & 0.4436145 & 0.1927257 &
+1.0000000 & 0.1411920 & 0.1311859 & 0.3097067 \\
+DiabetesPedigreeFunction & -0.0432415 & 0.0912934 & 0.0300463 &
+0.1803905 & 0.2211505 & 0.1411920 & 1.0000000 & 0.0429086 & 0.1753535 \\
+Age & 0.6072163 & 0.2850447 & 0.3508946 & -0.0667949 & -0.1142129 &
+0.1311859 & 0.0429086 & 1.0000000 & 0.3090403 \\
+Outcome & 0.1986887 & 0.4757763 & 0.1429207 & 0.0897278 & 0.0664716 &
+0.3097067 & 0.1753535 & 0.3090403 & 1.0000000 \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggcorrplot}\NormalTok{(cor\_res\_spe}\SpecialCharTok{$}\NormalTok{r)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+\hypertarget{simple-linear-regression}{%
+\subsubsection{Simple linear
+regression}\label{simple-linear-regression}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# function to make a pairwise linear regression between each variables}
+\NormalTok{pairwise\_lm }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{ (dat) \{}
+\NormalTok{  n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(dat)}
+\NormalTok{  p }\OtherTok{\textless{}{-}} \FunctionTok{ncol}\NormalTok{(dat)}
+\NormalTok{  LHS }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(dat), p)}
+\NormalTok{  RHS }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(dat), }\AttributeTok{each =}\NormalTok{ p)}
+  \DocumentationTok{\#\# function to fit and summarize a single model}
+\NormalTok{  fitmodel }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{ (LHS, RHS) \{}
+    \ControlFlowTok{if}\NormalTok{ (RHS }\SpecialCharTok{==}\NormalTok{ LHS) \{}
+\NormalTok{      z }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\StringTok{"LHS"} \OtherTok{=}\NormalTok{ LHS, }\StringTok{"RHS"} \OtherTok{=}\NormalTok{ RHS,}
+                      \StringTok{"alpha"} \OtherTok{=} \DecValTok{0}\NormalTok{,}
+                      \StringTok{"beta"} \OtherTok{=} \DecValTok{1}\NormalTok{,}
+                      \StringTok{"beta.se"} \OtherTok{=} \DecValTok{0}\NormalTok{,}
+                      \StringTok{"beta.tv"} \OtherTok{=} \ConstantTok{Inf}\NormalTok{,}
+                      \StringTok{"beta.pv"} \OtherTok{=} \DecValTok{0}\NormalTok{,}
+                      \StringTok{"sig"} \OtherTok{=} \DecValTok{0}\NormalTok{,}
+                      \StringTok{"R2"} \OtherTok{=} \DecValTok{1}\NormalTok{,}
+                      \StringTok{"F.fv"} \OtherTok{=} \ConstantTok{Inf}\NormalTok{,}
+                      \StringTok{"F.pv"} \OtherTok{=} \DecValTok{0}\NormalTok{,}
+                      \AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{      \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{      result }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(}\FunctionTok{lm}\NormalTok{(}\FunctionTok{reformulate}\NormalTok{(RHS, LHS), }\AttributeTok{data =}\NormalTok{ dat))}
+\NormalTok{      z }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\StringTok{"LHS"} \OtherTok{=}\NormalTok{ LHS, }\StringTok{"RHS"} \OtherTok{=}\NormalTok{ RHS,}
+                      \StringTok{"alpha"} \OtherTok{=}\NormalTok{ result}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{],}
+                      \StringTok{"beta"} \OtherTok{=}\NormalTok{ result}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{],}
+                      \StringTok{"beta.se"} \OtherTok{=}\NormalTok{ result}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{],}
+                      \StringTok{"beta.tv"} \OtherTok{=}\NormalTok{ result}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{],}
+                      \StringTok{"beta.pv"} \OtherTok{=}\NormalTok{ result}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{],}
+                      \StringTok{"sig"} \OtherTok{=}\NormalTok{ result}\SpecialCharTok{$}\NormalTok{sigma,}
+                      \StringTok{"R2"} \OtherTok{=}\NormalTok{ result}\SpecialCharTok{$}\NormalTok{r.squared,}
+                      \StringTok{"F.fv"} \OtherTok{=}\NormalTok{ result}\SpecialCharTok{$}\NormalTok{fstatistic[[}\DecValTok{1}\NormalTok{]],}
+                      \StringTok{"F.pv"} \OtherTok{=} \FunctionTok{pf}\NormalTok{(result}\SpecialCharTok{$}\NormalTok{fstatistic[[}\DecValTok{1}\NormalTok{]], }\DecValTok{1}\NormalTok{, n }\SpecialCharTok{{-}} \DecValTok{2}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{),}
+                      \AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{        \}}
+\NormalTok{      z}
+\NormalTok{      \}}
+  \DocumentationTok{\#\# loop through all models}
+  \FunctionTok{do.call}\NormalTok{(}\StringTok{"rbind.data.frame"}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\FunctionTok{Map}\NormalTok{(fitmodel, LHS, RHS),}
+                                \FunctionTok{list}\NormalTok{(}\AttributeTok{make.row.names =} \ConstantTok{FALSE}\NormalTok{,}
+                                     \AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)))}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# perform pairwise linear regression}
+\NormalTok{diabetes\_lm\_res }\OtherTok{\textless{}{-}} \FunctionTok{pairwise\_lm}\NormalTok{(diabetes\_lm\_1)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(diabetes\_lm\_res)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.17}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.17}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.08}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.08}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.07}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.08}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.07}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.08}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.07}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.08}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.07}}@{}}
+\toprule
+LHS & RHS & alpha & beta & beta.se & beta.tv & beta.pv & sig & R2 & F.fv
+& F.pv \\
+\midrule
+\endhead
+Glucose & Glucose & 0.000000 & 1.0000000 & 0.0000000 & Inf & 0.0000000 &
+0.0000000 & 1.0000000 & Inf & 0.0000000 \\
+BloodPressure & Glucose & 19.239382 & 7.4600096 & 1.7149113 & 4.3500849
+& 0.0000174 & 12.2191693 & 0.0462758 & 18.9232389 & 0.0000174 \\
+SkinThickness & Glucose & -11.081240 & 5.8356382 & 1.4479842 & 4.0301808
+& 0.0000670 & 10.3172477 & 0.0399819 & 16.2423573 & 0.0000670 \\
+Insulin & Glucose & -5.234593 & 1.7667161 & 0.1089503 & 16.2158024 &
+0.0000000 & 0.7762978 & 0.4027128 & 262.9522459 & 0.0000000 \\
+BMI & Glucose & 3.726028 & 0.1871564 & 0.0418381 & 4.4733523 & 0.0000101
+& 0.2981066 & 0.0488057 & 20.0108805 & 0.0000101 \\
+DiabetesPedigreeFunction & Glucose & -3.025995 & 0.2633538 & 0.1261891 &
+2.0869767 & 0.0375391 & 0.8991290 & 0.0110445 & 4.3554719 & 0.0375391 \\
+Glucose & BloodPressure & 6.454936 & 0.0062032 & 0.0014260 & 4.3500849 &
+0.0000174 & 0.3523539 & 0.0462758 & 18.9232389 & 0.0000174 \\
+BloodPressure & BloodPressure & 0.000000 & 1.0000000 & 0.0000000 & Inf &
+0.0000000 & 0.0000000 & 1.0000000 & Inf & 0.0000000 \\
+SkinThickness & BloodPressure & 15.314729 & 0.1957266 & 0.0414464 &
+4.7224043 & 0.0000033 & 10.2411614 & 0.0540894 & 22.3011019 &
+0.0000033 \\
+Insulin & BloodPressure & 6.234255 & 0.0100421 & 0.0040332 & 2.4898660 &
+0.0131948 & 0.9965799 & 0.0156473 & 6.1994327 & 0.0131948 \\
+BMI & BloodPressure & 4.509526 & 0.0071695 & 0.0011825 & 6.0628181 &
+0.0000000 & 0.2921989 & 0.0861326 & 36.7577629 & 0.0000000 \\
+DiabetesPedigreeFunction & BloodPressure & -1.070738 & -0.0019796 &
+0.0036577 & -0.5412239 & 0.5886622 & 0.9037964 & 0.0007505 & 0.2929234 &
+0.5886622 \\
+Glucose & SkinThickness & 6.693588 & 0.0068513 & 0.0017000 & 4.0301808 &
+0.0000670 & 0.3535147 & 0.0399819 & 16.2423573 & 0.0000670 \\
+BloodPressure & SkinThickness & 62.608884 & 0.2763516 & 0.0585193 &
+4.7224043 & 0.0000033 & 12.1690123 & 0.0540894 & 22.3011019 &
+0.0000033 \\
+SkinThickness & SkinThickness & 0.000000 & 1.0000000 & 0.0000000 & Inf &
+0.0000000 & 0.0000000 & 1.0000000 & Inf & 0.0000000 \\
+Insulin & SkinThickness & 6.392759 & 0.0189088 & 0.0047345 & 3.9938208 &
+0.0000777 & 0.9845380 & 0.0392920 & 15.9506046 & 0.0000777 \\
+BMI & SkinThickness & 4.447485 & 0.0195112 & 0.0010883 & 17.9280697 &
+0.0000000 & 0.2263120 & 0.4517973 & 321.4156833 & 0.0000000 \\
+DiabetesPedigreeFunction & SkinThickness & -1.498309 & 0.0098706 &
+0.0043191 & 2.2853659 & 0.0228274 & 0.8981418 & 0.0132151 & 5.2228974 &
+0.0228274 \\
+Glucose & Insulin & 5.310459 & 0.2279443 & 0.0140569 & 16.2158024 &
+0.0000000 & 0.2788427 & 0.4027128 & 262.9522459 & 0.0000000 \\
+BloodPressure & Insulin & 59.843601 & 1.5581618 & 0.6258015 & 2.4898660
+& 0.0131948 & 12.4138260 & 0.0156473 & 6.1994327 & 0.0131948 \\
+SkinThickness & Insulin & 14.716264 & 2.0779705 & 0.5202964 & 3.9938208
+& 0.0000777 & 10.3209545 & 0.0392920 & 15.9506046 & 0.0000777 \\
+Insulin & Insulin & 0.000000 & 1.0000000 & 0.0000000 & Inf & 0.0000000 &
+0.0000000 & 1.0000000 & Inf & 0.0000000 \\
+BMI & Insulin & 4.430122 & 0.0843948 & 0.0148043 & 5.7006916 & 0.0000000
+& 0.2936683 & 0.0769185 & 32.4978850 & 0.0000000 \\
+DiabetesPedigreeFunction & Insulin & -1.865587 & 0.0943223 & 0.0453280 &
+2.0808812 & 0.0380968 & 0.8991580 & 0.0109808 & 4.3300667 & 0.0380968 \\
+Glucose & BMI & 5.585187 & 0.2607751 & 0.0582952 & 4.4733523 & 0.0000101
+& 0.3518863 & 0.0488057 & 20.0108805 & 0.0000101 \\
+BloodPressure & BMI & 10.400730 & 12.0137079 & 1.9815386 & 6.0628181 &
+0.0000000 & 11.9611204 & 0.0861326 & 36.7577629 & 0.0000000 \\
+SkinThickness & BMI & -87.007283 & 23.1557548 & 1.2915922 & 17.9280697 &
+0.0000000 & 7.7964113 & 0.4517973 & 321.4156833 & 0.0000000 \\
+Insulin & BMI & 2.372084 & 0.9114126 & 0.1598775 & 5.7006916 & 0.0000000
+& 0.9650655 & 0.0769185 & 32.4978850 & 0.0000000 \\
+BMI & BMI & 0.000000 & 1.0000000 & 0.0000000 & Inf & 0.0000000 &
+0.0000000 & 1.0000000 & Inf & 0.0000000 \\
+DiabetesPedigreeFunction & BMI & -3.042082 & 0.3651121 & 0.1486382 &
+2.4563813 & 0.0144694 & 0.8972218 & 0.0152356 & 6.0338091 & 0.0144694 \\
+Glucose & DiabetesPedigreeFunction & 6.944044 & 0.0419380 & 0.0200951 &
+2.0869767 & 0.0375391 & 0.3588030 & 0.0110445 & 4.3554719 & 0.0375391 \\
+BloodPressure & DiabetesPedigreeFunction & 70.204291 & -0.3791214 &
+0.7004889 & -0.5412239 & 0.5886622 & 12.5074058 & 0.0007505 & 0.2929234
+& 0.5886622 \\
+SkinThickness & DiabetesPedigreeFunction & 30.766229 & 1.3388293 &
+0.5858271 & 2.2853659 & 0.0228274 & 10.4600898 & 0.0132151 & 5.2228974 &
+0.0228274 \\
+Insulin & DiabetesPedigreeFunction & 7.084803 & 0.1164181 & 0.0559465 &
+2.0808812 & 0.0380968 & 0.9989393 & 0.0109808 & 4.3300667 & 0.0380968 \\
+BMI & DiabetesPedigreeFunction & 5.066666 & 0.0417285 & 0.0169878 &
+2.4563813 & 0.0144694 & 0.3033215 & 0.0152356 & 6.0338091 & 0.0144694 \\
+DiabetesPedigreeFunction & DiabetesPedigreeFunction & 0.000000 &
+1.0000000 & 0.0000000 & Inf & 0.0000000 & 0.0000000 & 1.0000000 & Inf &
+0.0000000 \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{exploratory-data-analysis}{%
+\subsection{Exploratory data analysis}\label{exploratory-data-analysis}}
+
+\hypertarget{principal-component-analysis}{%
+\subsubsection{Principal component
+analysis}\label{principal-component-analysis}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca\_res }\OtherTok{\textless{}{-}} \FunctionTok{prcomp}\NormalTok{(diabetes\_lm,}\AttributeTok{scale. =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{autoplot}\NormalTok{(pca\_res, }\AttributeTok{data =}\NormalTok{ diabetes, }\AttributeTok{colour =} \StringTok{\textquotesingle{}Outcome\textquotesingle{}}\NormalTok{,}
+         \AttributeTok{frame =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{frame.type =} \StringTok{\textquotesingle{}norm\textquotesingle{}}\NormalTok{, }\AttributeTok{shape =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{label.size =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# remove outliers}
+\NormalTok{rows\_remove }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"446"}\NormalTok{,}\StringTok{"121"}\NormalTok{,}\StringTok{"178"}\NormalTok{,}\StringTok{"618"}\NormalTok{,}\StringTok{"255"}\NormalTok{,}\StringTok{"520"}\NormalTok{,}\StringTok{"29"}\NormalTok{,}\StringTok{"460"}\NormalTok{,}\StringTok{"461"}\NormalTok{)}
+\NormalTok{diabetes\_lm\_clean }\OtherTok{\textless{}{-}}\NormalTok{ diabetes\_lm[}\SpecialCharTok{!}\NormalTok{(}\FunctionTok{row.names}\NormalTok{(diabetes\_lm) }\SpecialCharTok{\%in\%}\NormalTok{ rows\_remove),]}
+\NormalTok{diabetes\_clean }\OtherTok{\textless{}{-}}\NormalTok{ diabetes[}\SpecialCharTok{!}\NormalTok{(}\FunctionTok{row.names}\NormalTok{(diabetes) }\SpecialCharTok{\%in\%}\NormalTok{ rows\_remove),]}
+
+\DocumentationTok{\#\# perform PCA again}
+\NormalTok{pca\_res }\OtherTok{\textless{}{-}} \FunctionTok{prcomp}\NormalTok{(diabetes\_lm\_clean,}\AttributeTok{scale. =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{autoplot}\NormalTok{(pca\_res, }\AttributeTok{data =}\NormalTok{ diabetes\_clean, }\AttributeTok{colour =} \StringTok{\textquotesingle{}Outcome\textquotesingle{}}\NormalTok{,}
+         \AttributeTok{frame =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{frame.type =} \StringTok{\textquotesingle{}norm\textquotesingle{}}\NormalTok{, }\AttributeTok{shape =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{label.size =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-20-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{autoplot}\NormalTok{(pca\_res, }\AttributeTok{data =}\NormalTok{ diabetes\_clean, }\AttributeTok{colour =} \StringTok{\textquotesingle{}Outcome\textquotesingle{}}\NormalTok{,}
+         \AttributeTok{loadings =} \ConstantTok{TRUE}\NormalTok{,}\AttributeTok{loadings.colour =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{,}
+         \AttributeTok{loadings.label =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{loadings.label.size =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-20-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# check scree plot and Q{-}Q plot}
+\NormalTok{pca\_res }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{fviz\_eig}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-20-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca\_res }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{get\_eig}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       eigenvalue variance.percent cumulative.variance.percent
+## Dim.1  2.7257637        34.072047                    34.07205
+## Dim.2  1.3862286        17.327858                    51.39990
+## Dim.3  1.2008741        15.010927                    66.41083
+## Dim.4  0.9870816        12.338521                    78.74935
+## Dim.5  0.7478677         9.348346                    88.09770
+## Dim.6  0.3448684         4.310855                    92.40855
+## Dim.7  0.3054505         3.818131                    96.22668
+## Dim.8  0.3018653         3.773316                   100.00000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca\_res }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{fviz\_eig}\NormalTok{(}\AttributeTok{choice =} \StringTok{"eigenvalue"}\NormalTok{,}
+             \AttributeTok{geom =} \StringTok{"line"}\NormalTok{,}
+             \AttributeTok{addlabels =}\NormalTok{ T) }\SpecialCharTok{+}
+             \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-20-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca\_res[[}\StringTok{"x"}\NormalTok{]][,}\DecValTok{1}\NormalTok{] }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{qqnorm}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-20-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ellipses}
+\FunctionTok{pca3d}\NormalTok{(pca\_res, }\AttributeTok{group=}\NormalTok{diabetes\_clean}\SpecialCharTok{$}\NormalTok{Outcome, }\AttributeTok{show.ellipses=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{ellipse.ci=}\FloatTok{0.75}\NormalTok{,      }\AttributeTok{show.plane=}\ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.08271360 0.05859502 0.07373144
+## Creating new device
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# loading}
+\FunctionTok{pca3d}\NormalTok{(pca\_res, }\AttributeTok{group=}\NormalTok{diabetes\_clean}\SpecialCharTok{$}\NormalTok{Outcome, }\AttributeTok{show.plane=}\ConstantTok{TRUE}\NormalTok{ , }\AttributeTok{biplot =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{biplot.vars =} \DecValTok{8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.08271360 0.05859502 0.07373144
+\end{verbatim}
+
+\hypertarget{d-pca-plot}{%
+\paragraph{3D PCA plot}\label{d-pca-plot}}
+
+\hypertarget{d-pca-biplot}{%
+\paragraph{3D PCA biplot}\label{d-pca-biplot}}
+
+\hypertarget{maximum-likelihood-factor-analysis}{%
+\subsubsection{Maximum-likelihood factor
+analysis}\label{maximum-likelihood-factor-analysis}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{factor\_res }\OtherTok{\textless{}{-}} \FunctionTok{factanal}\NormalTok{(diabetes\_lm, }\AttributeTok{factors =} \DecValTok{3}\NormalTok{, }\AttributeTok{scores =} \StringTok{\textquotesingle{}regression\textquotesingle{}}\NormalTok{)}
+\FunctionTok{autoplot}\NormalTok{(factor\_res, }\AttributeTok{data =}\NormalTok{ diabetes, }\AttributeTok{colour =} \StringTok{\textquotesingle{}Outcome\textquotesingle{}}\NormalTok{,}\AttributeTok{loadings =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{loadings.label =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{loadings.label.size  =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\hypertarget{t-sne-analysis}{%
+\subsubsection{t-SNE analysis}\label{t-sne-analysis}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tsne\_out }\OtherTok{\textless{}{-}} \FunctionTok{Rtsne}\NormalTok{(diabetes\_lm, }\AttributeTok{perplexity =} \DecValTok{20}\NormalTok{)}
+\NormalTok{pdat }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(tsne\_out}\SpecialCharTok{$}\NormalTok{Y, diabetes}\SpecialCharTok{$}\NormalTok{Outcome)}
+\FunctionTok{colnames}\NormalTok{(pdat) }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"Y1"}\NormalTok{, }\StringTok{"Y2"}\NormalTok{, }\StringTok{"group"}\NormalTok{)}
+\FunctionTok{ggplot}\NormalTok{(pdat,}\FunctionTok{aes}\NormalTok{(Y1,Y2))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Y1,Y2, }\AttributeTok{fill =}\NormalTok{ group),}\AttributeTok{shape =} \DecValTok{21}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+             \FunctionTok{stat\_ellipse}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ group, }\AttributeTok{fill =}\NormalTok{ group),}
+                          \AttributeTok{geom =} \StringTok{"polygon"}\NormalTok{,}
+                          \AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{,}
+                          \AttributeTok{linetype =} \DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
+             \FunctionTok{theme\_classic}\NormalTok{() }\SpecialCharTok{+}
+             \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Proj1-Diabetes_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\end{document}
